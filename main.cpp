@@ -17,7 +17,7 @@ int main(){
 		return -1;
 	}
 	myClusterAnalysis.Init(img, 10, 10,10);
-	myClusterAnalysis.DoDBSCAN();
+	myClusterAnalysis.DoFSDP();
 	myClusterAnalysis.showImage(img);
 	namedWindow("image", CV_WINDOW_AUTOSIZE);
 
