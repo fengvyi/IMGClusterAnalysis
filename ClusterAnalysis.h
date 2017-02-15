@@ -237,16 +237,8 @@ public:
 				it++;
 			}
 
-		}
-	
-
+		}	
 		return true;
-
 	}
 	
-
-
-
-
-
 };
