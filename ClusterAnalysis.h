@@ -180,7 +180,7 @@ public:
 	Return value： true;    
 	*/
      
-	bool DoDBSCAN()
+	bool DoFSDP()
 	{
 		unsigned long clusterId = 0;
 		for (unsigned long i = 0; i < dataNum; i++)
