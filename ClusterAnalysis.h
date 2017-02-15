@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include<opencv2\opencv.hpp>//opencv2ÏÂÊÇC++½Ó¿Ú
+#include<opencv2\opencv.hpp>//opencv2 api for C++
 #include"DataPoint.h"
 #define random(x) (rand()%x)
+#define INPUT_SIZE 100000
 using namespace cv;
 using namespace std;
 
@@ -13,22 +14,23 @@ class ClusterAnalysis
 {
 
 private:
-	DataPoint* dataSets=new DataPoint[100000];    //Êı¾İ¼¯ºÏ
-	unsigned int dimNum;          //Î¬¶È
-	double radius;                //°ë¾¶
-	unsigned int dataNum;         //Êı¾İÊıÁ¿
-	unsigned int minPTs;          //ÁÚÓò×îĞ¡Êı¾İ¸öÊı
-	double minDTs;
+	DataPoint* dataSets=new DataPoint[INPUT_SIZE];    //Data Sets
+	unsigned int dimNum;          //Dimension
+	double radius;                //Radius
+	unsigned int dataNum;         //Data number
+	unsigned int minPTs;          //Minimum number of neighborhood points
+	double minDTs;                //Minimun distance to be recognized as a cluster center
 public:
 
 	ClusterAnalysis(){};
 
 	/*
-	º¯Êı£º»ñÈ¡Á½Êı¾İµãÖ®¼ä¾àÀë
-	²ÎÊı£º
-	DataPoint& dp1;        //Êı¾İµã1
-	DataPoint& dp2;        //Êı¾İµã2
-	·µ»ØÖµ£º double;    //Á½µãÖ®¼äµÄ¾àÀë        */
+	Function: Get the distance between two data points
+	Parameterï¼š
+	DataPoint& dp1;        //Data point 1
+	DataPoint& dp2;        //Data point 2
+	Return valueï¼š double; //Distance between two data points        
+	*/
 
 	double getDistance(DataPoint& dp1, DataPoint& dp2)
 	{
@@ -43,8 +45,8 @@ public:
 	}
 
 	/*
-	º¯Êı£ºÉèÖÃÊı¾İµãµÄÁìÓòµãÁĞ±í
-	ËµÃ÷£ºÉèÖÃÊı¾İµãµÄÁìÓòµãÁĞ±í
+	Function: Sets the list of domain points for the data points
+        Description: Sets the list of domain points for the data points
 	  */
       void setArrivalPoints(DataPoint& dp)
 	{
@@ -64,7 +66,7 @@ public:
 
 
 	  /*
-	  º¯Êı£º¼ÆËãÓëÃÜ¶È±Èdp´óµÄµãµÄ¾àÀë
+	  Function: Calculates the distance from the point where the density is greater than dp
 	  */
 
 	  void  setKey(DataPoint& dp)
@@ -95,12 +97,12 @@ public:
 
 
 	  /*
-	  º¯Êı£º¶ÔÊı¾İµãÁìÓòÄÚµÄµãÖ´ĞĞ¾ÛÀà²Ù×÷
-	  ËµÃ÷£º²ÉÓÃµİ¹éµÄ·½·¨£¬Éî¶ÈÓÅÏÈ¾ÛÀàÊı¾İ
-	  ²ÎÊı£º
-	  unsigned long dpID;            //Êı¾İµãid
-	  unsigned long clusterId;    //Êı¾İµãËùÊô´Øid
-	    */
+	  Function: Performs clustering operations on points in the data point area
+          Description: Recursive method, depth-first clustering data
+	  Parameterï¼š
+	  unsigned long dpID;            //Data point id
+	  unsigned long clusterId;       //Cluter id it belongs to
+	  */
 
 
 	void KeyPointCluster(unsigned long dpID, unsigned long clusterId)
@@ -128,11 +130,12 @@ public:
 	}
 
 	/*
-	º¯Êı£º¾ÛÀà³õÊ¼»¯²Ù×÷
-	double radius;    //°ë¾¶
-	int minPTs;        //ÁìÓò×îĞ¡Êı¾İ¸öÊı
-	double minDTs;     //ÓëÃÜ¶È±ÈËü¸ßµÄµãµÄ¾àÀë
-	·µ»ØÖµ£º true;    */
+	Function: Clustering initialization operation
+	double radius;     //Radius
+	int minPTs;        //Minimum number of neighborhood points
+	double minDTs;     //Minimun distance to be recognized as a cluster center
+	Return valueï¼š true;    
+	*/
 
 	bool Init(Mat img, double radius, int minPTs,double minDTS)
 	{
@@ -142,7 +145,7 @@ public:
 		this->minDTs = minDTs;
 
 
-		//¶ÁÈëÍ¼Ïñ
+		//Read image
 		unsigned long iCount = 0;
 		for (int i = 0; i < img.rows; i++)
 		{
@@ -171,10 +174,11 @@ public:
 	}
 
 	/*
-	º¯Êı£ºÖ´ĞĞ¾ÛÀà²Ù×÷
-	ËµÃ÷£ºÖ´ĞĞ¾ÛÀà²Ù×÷
-	²ÎÊı£º
-	·µ»ØÖµ£º true;    */
+	Function: Performs a clustering operation
+        Description: Performs a clustering operation
+        Parameters:
+	Return valueï¼š true;    
+	*/
      
 	bool DoDBSCAN()
 	{
@@ -192,13 +196,13 @@ public:
 			}
 		}
 
-		cout << "¾Û¼¯¸öÊı:" << clusterId << endl;
+		cout << "Number of cluster recognized:" << clusterId << endl;
 		
 		return true;
 	}
 
 	/*
-	´¦Àí¾Û¼¯£¬ĞŞ¸ÄÍ¼Ïñ²¢Êä³ö
+	Processing the clustering, re-coloring the image and outputting it
 	*/
 
 	bool showImage(Mat& img)
@@ -218,7 +222,7 @@ public:
 						dataSets[j].setPixel(x, y, z);
 			}
 		}
-		//Êä³öÍ¼Ïñ
+		//Output image
 		for (int i = 0; i < img.rows; i++)
 		{
 			
