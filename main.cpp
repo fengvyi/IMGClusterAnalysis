@@ -9,7 +9,7 @@ int main(){
 	srand((int)time(0));
 	ClusterAnalysis myClusterAnalysis;
 	
-    Mat img = imread("test3.jpg");
+        Mat img = imread("test.jpg");
 	
 	if (img.empty())
 	{
