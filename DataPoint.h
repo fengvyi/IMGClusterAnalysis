@@ -1,20 +1,21 @@
 #include<vector>
 using namespace std;
 
+#define NEIGH_SET 1000
 const int DIME_NUM = 2;
 
 class DataPoint
 {
 private:
-	unsigned long dpID;                         //数据点ID
-	double dimension[DIME_NUM];                 //维度数据
-    long clusterID;                             //所属聚类ID
-	bool visited;                               //是否已访问
+	unsigned long dpID;                         //Data point ID
+	double dimension[DIME_NUM];                 //Dimensional data
+        long clusterID;                             //Cluster ID it belongs to
+	bool visited;                               //Whether visited ot not
 	
 	
 public:
-	int* arrivalPoints=new int[1000];         //领域数据点id列表
-	bool isKey;                                 //是否核心
+	int* arrivalPoints=new int[NEIGH_SET];       //Neighborhood data points id set
+	bool isKey;                                  //Whether it is a cluster center
 	int pixel[5];
 	unsigned int count = 0;
 	DataPoint(){}
