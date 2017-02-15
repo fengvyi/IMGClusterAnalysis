@@ -2,7 +2,7 @@
 #include"ClusterAnalysis.h"
 using namespace std;
 using namespace cv;
-//cv是Opencv的名字空间
+//cv is the namespace of Opencv
 
 
 int main(){
@@ -13,7 +13,7 @@ int main(){
 	
 	if (img.empty())
 	{
-		cout << "打开图像失败！" << endl;
+		cout << "Load image failed!" << endl;
 		return -1;
 	}
 	myClusterAnalysis.Init(img, 10, 10,10);
