@@ -20,10 +20,7 @@ int main(){
 	myClusterAnalysis.DoFSDP();
 	myClusterAnalysis.showImage(img);
 	namedWindow("image", CV_WINDOW_AUTOSIZE);
-
 	imshow("image", img);
-
-	
 
 	waitKey();
 	return 0;
