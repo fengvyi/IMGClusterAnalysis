@@ -10,5 +10,4 @@
 * Result on character
 ![](https://github.com/fengvyi/IMGClusterAnalysis/blob/master/Results%20on%20character%20.png)
 <br>
-* Result on scenery
-![](https://github.com/fengvyi/IMGClusterAnalysis/blob/master/Results%20on%20natural%20scenery.png)
+
