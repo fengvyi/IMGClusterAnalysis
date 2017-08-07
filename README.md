@@ -7,7 +7,6 @@
 * Developed a program in C++ using OpenCV, applying the Fast Search algorithm, which recognized clusters and could segment images in a given JPG image 
  
 # Sample Results
-* Result on character
 ![](https://github.com/fengvyi/IMGClusterAnalysis/blob/master/Results%20on%20character%20.png)
 <br>
 
